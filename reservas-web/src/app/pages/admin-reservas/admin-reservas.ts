@@ -34,8 +34,8 @@ export class AdminReservas implements OnInit {
     // El desplegable no necesita paginar bien: pedimos una página grande (el backend la limitará)
     try {
       this.recursos = (await this.resourceService.list(0, 100)).content;
-    } catch (error) {
-      console.log(error);
+    } catch {
+      // sin la lista de recursos solo falta el filtro por recurso; el listado sigue funcionando
     }
     await this.cargar(0);
   }

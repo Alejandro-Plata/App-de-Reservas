@@ -6,10 +6,9 @@ import { AuthResponse, Role, Session } from '../types/user';
 })
 export class AuthService {
   // En local usamos la API del docker compose; en cualquier otro dominio (Vercel) la API desplegada.
-  // Al desplegar, sustituye la segunda URL por la que te dé Render.
   API_URL = ['localhost', '127.0.0.1'].includes(window.location.hostname)
     ? 'http://localhost:8080/api'
-    : 'https://TU-API.onrender.com/api';
+    : 'https://reservas-api-nt3e.onrender.com/api';
   TOKEN_KEY = 'auth_token';
   SESSION_KEY = 'session';
 
@@ -51,8 +50,7 @@ export class AuthService {
     try {
       const stored = localStorage.getItem(this.SESSION_KEY);
       return stored ? JSON.parse(stored) : null;
-    } catch (error) {
-      console.log(error);
+    } catch {
       localStorage.removeItem(this.SESSION_KEY);
       return null;
     }
