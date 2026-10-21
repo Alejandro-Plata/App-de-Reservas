@@ -1,0 +1,39 @@
+server:
+  port: ${PORT:8080}   # Render y otros hostings indican el puerto con la variable PORT
+
+spring:
+  application:
+    name: reservas-api
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/reservas}
+    username: ${DB_USER:reservas}
+    password: ${DB_PASSWORD:reservas}
+  jpa:
+    hibernate:
+      ddl-auto: validate   # el esquema lo gestiona Flyway, no Hibernate
+    open-in-view: false
+  flyway:
+    enabled: true
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+        max-page-size: 50  # aunque el cliente pida size=1000, nunca devolvemos más de 50
+
+app:
+  jwt:
+    secret: ${JWT_SECRET}            # obligatoria: mínimo 32 caracteres, nunca en el código
+    expiration-minutes: 60
+  reservation:
+    min-minutes: 30
+    max-minutes: 240
+    time-zone: ${APP_TIME_ZONE:Europe/Madrid}   # zona con la que se interpreta "un día" en /availability y en los filtros
+  cors:
+    allowed-origins: ${CORS_ORIGINS:http://localhost:4200,http://127.0.0.1:4200}
+  admin:               # si se rellenan, se crea un administrador al arrancar (si no existe)
+    email: ${ADMIN_EMAIL:}
+    password: ${ADMIN_PASSWORD:}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html

@@ -1,0 +1,83 @@
+<section class="hero-panel chamfer">
+  <h1 class="display">Admin</h1>
+  <p class="tagline">Todas las reservas del sistema, con filtros.</p>
+</section>
+
+<section class="module">
+  <div class="section-label-bar">Filtros</div>
+  <form class="module-body filters" (ngSubmit)="cargar(0)">
+    <div class="field">
+      <label for="status">Estado</label>
+      <select id="status" name="status" [(ngModel)]="filtros.status">
+        <option value="">Todos</option>
+        <option value="CONFIRMED">Confirmadas</option>
+        <option value="CANCELLED">Canceladas</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="resourceId">Recurso</label>
+      <select id="resourceId" name="resourceId" [(ngModel)]="filtros.resourceId">
+        <option [ngValue]="null">Todos</option>
+        @for (r of recursos; track r.id) {
+        <option [ngValue]="r.id">{{ r.name }}</option>
+        }
+      </select>
+    </div>
+    <div class="field">
+      <label for="from">Desde</label>
+      <input id="from" name="from" type="date" [(ngModel)]="filtros.from">
+    </div>
+    <div class="field">
+      <label for="to">Hasta</label>
+      <input id="to" name="to" type="date" [(ngModel)]="filtros.to">
+    </div>
+    <button class="btn btn-primary" type="submit">Go</button>
+    <button class="btn btn-secondary" type="button" (click)="limpiar()">Limpiar</button>
+  </form>
+</section>
+
+<section class="module">
+  <div class="section-label-bar">Reservas</div>
+  <div class="module-body">
+    @if (errorMessage) {
+    <div class="error-alert" role="alert">{{ errorMessage }}</div>
+    }
+
+    @if (isLoading) {
+    <div class="empty">Cargando…</div>
+    } @else if (reservas.length === 0 && !errorMessage) {
+    <div class="empty">Ninguna reserva coincide con los filtros.</div>
+    } @else {
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Usuario</th><th>Recurso</th><th>Inicio</th><th>Fin</th><th>Estado</th><th></th></tr>
+        </thead>
+        <tbody>
+          @for (r of reservas; track r.id) {
+          <tr>
+            <td>{{ r.userEmail }}</td>
+            <td>{{ r.resourceName }}</td>
+            <td>{{ formatearFecha(r.startAt) }}</td>
+            <td>{{ formatearFecha(r.endAt) }}</td>
+            <td>
+              <span class="badge" [class.badge-off]="r.status === 'CANCELLED'">
+                {{ r.status === 'CONFIRMED' ? 'Confirmada' : 'Cancelada' }}
+              </span>
+            </td>
+            <td>
+              @if (r.status === 'CONFIRMED') {
+              <button class="btn btn-danger" type="button" (click)="cancelar(r)">Cancelar</button>
+              }
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    }
+
+    <app-paginacion [pagina]="pagina" [totalPaginas]="totalPaginas" [totalElementos]="totalElementos"
+      (cambio)="cargar($event)" />
+  </div>
+</section>

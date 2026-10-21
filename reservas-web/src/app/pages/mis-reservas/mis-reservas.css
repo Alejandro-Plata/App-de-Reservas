@@ -1,0 +1,4 @@
+.news-row .btn { min-height: 32px; padding: var(--sp-xs) var(--sp-md); }
+@media (max-width: 480px) {
+  .news-row { flex-wrap: wrap; }
+}

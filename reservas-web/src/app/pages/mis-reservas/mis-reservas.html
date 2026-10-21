@@ -1,0 +1,41 @@
+<section class="hero-panel chamfer">
+  <h1 class="display">Mis reservas</h1>
+  <p class="tagline">Tu historial, de la más reciente a la más antigua.</p>
+</section>
+
+<section class="module">
+  <div class="section-label-bar">Partidas guardadas</div>
+  <div class="module-body">
+    @if (errorMessage) {
+    <div class="error-alert" role="alert">{{ errorMessage }}</div>
+    }
+
+    @if (isLoading) {
+    <div class="empty">Cargando…</div>
+    } @else if (reservas.length === 0 && !errorMessage) {
+    <div class="empty">
+      Aún no tienes reservas. <a routerLink="/recursos">Reserva tu primer recurso</a>
+    </div>
+    } @else {
+    <ul class="row-list">
+      @for (r of reservas; track r.id) {
+      <li class="news-row">
+        <div class="grow">
+          {{ r.resourceName }}
+          <small>{{ formatearFecha(r.startAt) }} → {{ formatearFecha(r.endAt) }}</small>
+        </div>
+        @if (r.status === 'CONFIRMED') {
+        <span class="badge">Confirmada</span>
+        <button class="btn btn-danger" type="button" (click)="cancelar(r)">Cancelar</button>
+        } @else {
+        <span class="badge badge-off">Cancelada</span>
+        }
+      </li>
+      }
+    </ul>
+    }
+
+    <app-paginacion [pagina]="pagina" [totalPaginas]="totalPaginas" [totalElementos]="totalElementos"
+      (cambio)="cargar($event)" />
+  </div>
+</section>

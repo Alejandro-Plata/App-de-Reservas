@@ -1,0 +1,15 @@
+.footer-bar {
+  background: var(--carbon);
+  background-image: radial-gradient(rgba(159, 190, 231, .25) 1px, transparent 1.2px);
+  background-size: 4px 4px;
+  color: var(--canvas-soft);
+  padding: var(--sp-lg);
+  margin-bottom: var(--sp-lg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--sp-md);
+  flex-wrap: wrap;
+}
+p { margin: 0; }
+.copy { font-size: 13px; }

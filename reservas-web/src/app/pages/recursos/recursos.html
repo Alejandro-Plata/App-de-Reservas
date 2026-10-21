@@ -1,0 +1,93 @@
+<section class="hero-panel chamfer">
+  <h1 class="display">{{ categoria ? NOMBRES[categoria] : 'Recursos' }}</h1>
+  <p class="tagline">Elige sala, pista o equipo y reserva tu hueco.</p>
+</section>
+
+<section class="module">
+  <div class="section-label-bar">
+    Catálogo
+    @if (authService.isAdmin()) {
+    <button class="btn btn-primary push" type="button" (click)="nuevo()">+ Nuevo</button>
+    }
+  </div>
+  <div class="module-body">
+
+    @if (formAbierto) {
+    <form [formGroup]="resourceForm" (ngSubmit)="guardar()" class="admin-form" novalidate>
+      <strong class="ui-label">{{ editandoId === null ? 'Nuevo recurso' : 'Editar recurso #' + editandoId }}</strong>
+      <div class="field">
+        <label for="name">Nombre</label>
+        <input id="name" type="text" formControlName="name"
+          [class.invalid]="resourceForm.get('name')?.invalid && resourceForm.get('name')?.touched">
+      </div>
+      <div class="field">
+        <label for="description">Descripción</label>
+        <textarea id="description" formControlName="description"></textarea>
+      </div>
+      <div class="field">
+        <label for="category">Categoría</label>
+        <select id="category" formControlName="category">
+          @for (c of CATEGORIAS; track c) {
+          <option [value]="c">{{ NOMBRES[c] }}</option>
+          }
+        </select>
+      </div>
+      <div class="field">
+        <label for="capacity">Capacidad</label>
+        <input id="capacity" type="number" min="1" formControlName="capacity"
+          [class.invalid]="resourceForm.get('capacity')?.invalid && resourceForm.get('capacity')?.touched">
+      </div>
+      @if (formError) {
+      <div class="error-alert" role="alert">{{ formError }}</div>
+      }
+      <div class="actions">
+        <button class="btn btn-submit" type="submit">Guardar <span class="arrow-disc">›</span></button>
+        <button class="btn btn-secondary" type="button" (click)="cancelarForm()">Cancelar</button>
+      </div>
+      <hr class="dotted-divider">
+    </form>
+    }
+
+    <form class="filters" (ngSubmit)="buscar()">
+      <div class="field">
+        <label for="busqueda">Buscar por nombre</label>
+        <input id="busqueda" name="busqueda" type="search" [(ngModel)]="busqueda">
+      </div>
+      <button class="btn btn-primary" type="submit">Go</button>
+    </form>
+
+    @if (errorMessage) {
+    <div class="error-alert" role="alert">{{ errorMessage }}</div>
+    }
+
+    @if (isLoading) {
+    <div class="empty">Cargando…</div>
+    } @else if (recursos.length === 0 && !errorMessage) {
+    <div class="empty">No hay {{ categoria ? NOMBRES[categoria].toLowerCase() : 'recursos' }} que mostrar.</div>
+    } @else {
+    <ul class="row-list">
+      @for (r of recursos; track r.id) {
+      <li class="news-row">
+        <div class="grow">
+          {{ r.name }}
+          <small>{{ NOMBRES[r.category] }} · {{ r.description || 'Sin descripción' }} · Capacidad: {{ r.capacity }}</small>
+        </div>
+        @if (!r.active) { <span class="badge badge-off">Inactivo</span> }
+        @if (authService.isAdmin()) {
+        <button class="btn btn-primary" type="button" (click)="editar(r)">Editar</button>
+        @if (r.active) {
+        <button class="btn btn-danger" type="button" (click)="desactivar(r)">Desactivar</button>
+        }
+        }
+        @if (r.active) {
+        <a class="arrow-chip" [routerLink]="['/recursos', r.id]" [attr.aria-label]="'Reservar ' + r.name">›</a>
+        }
+      </li>
+      }
+    </ul>
+    }
+
+    <app-paginacion [pagina]="pagina" [totalPaginas]="totalPaginas" [totalElementos]="totalElementos"
+      (cambio)="cargar($event)" />
+  </div>
+</section>

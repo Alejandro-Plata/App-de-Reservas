@@ -1,0 +1,46 @@
+.shell { max-width: 1400px; margin: 0 auto; padding: 0 var(--sp-xl); min-height: 100vh; display: flex; flex-direction: column; }
+
+/* Dos tercios de contenido + un tercio de raíl, tal y como en el original */
+.body-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
+  gap: var(--sp-xl);
+  padding: var(--sp-lg) 0;
+  flex: 1; /* empuja el pie al borde inferior aunque haya poco contenido */
+  align-items: start;
+}
+.body-grid.single { grid-template-columns: minmax(0, 1fr); }
+
+.rail { display: flex; flex-direction: column; gap: var(--sp-sm); align-self: start; }
+.rail .btn { justify-content: flex-start; width: 100%; min-height: 44px; }
+
+.rail-user {
+  background: var(--carbon);
+  /* Textura de semitono (rejilla de altavoz) */
+  background-image: radial-gradient(rgba(159, 190, 231, .25) 1px, transparent 1.2px);
+  background-size: 4px 4px;
+  color: var(--surface);
+  padding: var(--sp-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-xs);
+  word-break: break-all;
+}
+
+.info-box { background: var(--surface); border-radius: 4px; padding: 0 var(--sp-md) var(--sp-md); margin-top: var(--sp-sm); }
+.info-tab {
+  background: var(--amber);
+  color: var(--carbon);
+  margin: 0 calc(var(--sp-md) * -1) var(--sp-sm);
+  padding: var(--sp-xs) var(--sp-md);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+.info-box ul { margin: 0; padding-left: var(--sp-lg); }
+
+/* Por debajo de ~720px el raíl pasa debajo del contenido */
+@media (max-width: 720px) {
+  .body-grid { grid-template-columns: minmax(0, 1fr); }
+}

@@ -1,0 +1,24 @@
+# Blueprint de Render: crea el servicio web a partir del Dockerfile de esta carpeta.
+# Los valores con sync:false se piden por el panel (no se guardan en el repositorio).
+services:
+  - type: web
+    name: reservas-api
+    runtime: docker
+    plan: free
+    rootDir: reservas-api   # carpeta de la API dentro de este repositorio
+    healthCheckPath: /swagger-ui.html
+    envVars:
+      - key: DB_URL
+        sync: false        # jdbc:postgresql://HOST/DB?sslmode=require  (conexión directa de Neon)
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true  # Render genera un valor aleatorio largo
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false        # https://tu-proyecto.vercel.app

@@ -1,0 +1,7 @@
+@if (totalPaginas() > 0) {
+<nav class="pager" aria-label="Paginación">
+  <button class="btn btn-primary" type="button" (click)="ir(pagina() - 1)" [disabled]="pagina() === 0">◂ Anterior</button>
+  <span class="ui-label">Pág. {{ pagina() + 1 }} / {{ totalPaginas() }} · {{ totalElementos() }} en total</span>
+  <button class="btn btn-primary" type="button" (click)="ir(pagina() + 1)" [disabled]="pagina() + 1 >= totalPaginas()">Siguiente ▸</button>
+</nav>
+}

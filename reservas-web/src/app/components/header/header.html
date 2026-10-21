@@ -1,0 +1,38 @@
+<header>
+  <!-- Masthead: logo y bocadillo de bienvenida -->
+  <div class="masthead">
+    <a routerLink="/recursos" class="logo-pill" aria-label="Reservas Station, inicio">Reservas</a>
+    <div class="mascot-bubble">¡Bienvenido a Reservas Station!</div>
+  </div>
+
+  <!-- Barra principal carbon con palabras doradas -->
+  <nav class="nav-bar" aria-label="Principal">
+    <button class="menu-toggle" type="button" (click)="toggleMenu()"
+      [attr.aria-expanded]="menuAbierto()" aria-controls="menu-links">
+      {{ menuAbierto() ? '✕' : '☰' }} Menú
+    </button>
+
+    <div id="menu-links" class="links" [class.open]="menuAbierto()">
+      @if (authService.isLoggedIn()) {
+      <a routerLink="/recursos" routerLinkActive="active" (click)="cerrarMenu()">Recursos</a>
+      <a routerLink="/mis-reservas" routerLinkActive="active" (click)="cerrarMenu()">Mis reservas</a>
+      @if (authService.isAdmin()) {
+      <a routerLink="/admin/reservas" routerLinkActive="active" (click)="cerrarMenu()">Admin</a>
+      }
+      <!-- Los chips ámbar son herramientas: aquí, cerrar sesión -->
+      <button class="btn btn-primary chip" type="button" (click)="logout()">Salir</button>
+      } @else {
+      <a routerLink="/login" routerLinkActive="active" (click)="cerrarMenu()">Entrar</a>
+      <a routerLink="/register" routerLinkActive="active" (click)="cerrarMenu()">Registro</a>
+      }
+    </div>
+  </nav>
+
+  <!-- Franja secundaria: filtra el catálogo por categoría (en móvil se desliza en horizontal) -->
+  <div class="subnav-strip">
+    <a routerLink="/recursos" [queryParams]="{ categoria: 'SALA' }" routerLinkActive="active" [routerLinkActiveOptions]="filtroActivo">Salas</a>
+    <a routerLink="/recursos" [queryParams]="{ categoria: 'PISTA' }" routerLinkActive="active" [routerLinkActiveOptions]="filtroActivo">Pistas</a>
+    <a routerLink="/recursos" [queryParams]="{ categoria: 'EQUIPO' }" routerLinkActive="active" [routerLinkActiveOptions]="filtroActivo">Equipos</a>
+    <a routerLink="/recursos" routerLinkActive="active" [routerLinkActiveOptions]="soloTodo">Todo reservable</a>
+  </div>
+</header>

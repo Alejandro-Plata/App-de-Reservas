@@ -1,0 +1,40 @@
+<div class="shell">
+  <app-header />
+
+  <div class="body-grid" [class.single]="isAuthPage()">
+    <main class="content">
+      <router-outlet />
+    </main>
+
+    @if (!isAuthPage()) {
+    <!-- Columna derecha: la "action rail" del diseño original -->
+    <aside class="rail">
+      @if (authService.getSession(); as session) {
+      <div class="rail-user">
+        <span class="micro">JUGADOR 1</span>
+        <strong>{{ session.email }}</strong>
+        <span class="badge">{{ session.role }}</span>
+      </div>
+      }
+      <a class="btn btn-secondary" routerLink="/recursos">▸ Recursos</a>
+      <a class="btn btn-secondary" routerLink="/mis-reservas">▸ Mis reservas</a>
+      @if (authService.isAdmin()) {
+      <a class="btn btn-secondary" routerLink="/admin/reservas">▸ Todas las reservas</a>
+      }
+      <button class="btn btn-secondary" type="button" (click)="logout()">▸ Salir</button>
+
+      <div class="info-box">
+        <div class="info-tab">Reglas del juego</div>
+        <ul>
+          <li>No se reserva en el pasado.</li>
+          <li>Duración: de 30 min a 4 h.</li>
+          <li>Un hueco no admite dos reservas.</li>
+          <li>Cancelar libera el hueco.</li>
+        </ul>
+      </div>
+    </aside>
+    }
+  </div>
+
+  <app-footer />
+</div>

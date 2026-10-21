@@ -1,0 +1,43 @@
+# Compilado (Maven)
+target/
+!.mvn/wrapper/maven-wrapper.jar
+*.jar
+*.war
+*.class
+dependency-reduced-pom.xml
+
+# Secretos y entorno
+.env
+.env.*
+!.env.example
+application-local.*
+application-secret*.*
+
+# Bases de datos locales
+*.db
+*.sqlite
+*.mv.db
+*.trace.db
+
+# Logs
+*.log
+logs/
+
+# IDEs y editores
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.classpath
+.project
+.settings/
+.factorypath
+.apt_generated/
+.sts4-cache/
+.springBeans
+nbproject/
+
+# Sistema
+.DS_Store
+Thumbs.db

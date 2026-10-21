@@ -1,0 +1,1 @@
+.pager { display: flex; justify-content: space-between; align-items: center; gap: var(--sp-sm); flex-wrap: wrap; margin-top: var(--sp-md); }

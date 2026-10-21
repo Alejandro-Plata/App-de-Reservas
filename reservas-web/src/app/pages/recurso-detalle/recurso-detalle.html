@@ -1,0 +1,76 @@
+@if (isLoading) {
+<div class="empty">Cargando…</div>
+} @else if (!recurso) {
+<div class="error-alert" role="alert">{{ errorMessage || 'Recurso no encontrado' }}</div>
+<a class="btn btn-secondary" routerLink="/recursos">◂ Volver</a>
+} @else {
+
+<section class="hero-panel chamfer">
+  <h1 class="display">{{ recurso.name }}</h1>
+  <p class="tagline">{{ recurso.description || 'Sin descripción' }} · Capacidad: {{ recurso.capacity }}</p>
+</section>
+
+@if (errorMessage) {
+<div class="error-alert" role="alert">{{ errorMessage }}</div>
+}
+
+<section class="module">
+  <div class="section-label-bar">Disponibilidad</div>
+  <div class="module-body">
+    <div class="filters">
+      <div class="field">
+        <label for="fecha">Día</label>
+        <input id="fecha" type="date" [value]="fecha" (change)="fecha = $any($event.target).value; cargarHuecos()">
+      </div>
+    </div>
+
+    @if (cargandoHuecos) {
+    <div class="empty">Cargando…</div>
+    } @else if (ocupados.length === 0) {
+    <div class="ok-alert">Todo el día libre.</div>
+    } @else {
+    <p class="ui-label">Huecos ocupados</p>
+    <ul class="row-list">
+      @for (o of ocupados; track o.startAt) {
+      <li class="news-row">
+        <span class="grow">{{ formatearHora(o.startAt) }} – {{ formatearHora(o.endAt) }}</span>
+        <span class="badge badge-off">Ocupado</span>
+      </li>
+      }
+    </ul>
+    }
+  </div>
+</section>
+
+<section class="module poll-panel">
+  <div class="section-label-bar">Reservar</div>
+  <form [formGroup]="reservaForm" (ngSubmit)="reservar()" class="module-body" novalidate>
+    <div class="field">
+      <label for="startAt">Inicio</label>
+      <input id="startAt" type="datetime-local" formControlName="startAt"
+        [class.invalid]="reservaForm.get('startAt')?.invalid && reservaForm.get('startAt')?.touched">
+    </div>
+    <div class="field">
+      <label for="endAt">Fin</label>
+      <input id="endAt" type="datetime-local" formControlName="endAt"
+        [class.invalid]="reservaForm.get('endAt')?.invalid && reservaForm.get('endAt')?.touched">
+    </div>
+
+    @if (reservaError) {
+    <div class="error-alert" role="alert">{{ reservaError }}</div>
+    }
+    @if (reservaOk) {
+    <div class="ok-alert" role="status">{{ reservaOk }}</div>
+    }
+
+    <div class="actions">
+      <button class="btn btn-submit" type="submit" [disabled]="enviando">
+        {{ enviando ? 'Enviando…' : 'Confirmar' }} <span class="arrow-disc">›</span>
+      </button>
+      <button class="btn btn-secondary" type="button" (click)="volver()">◂ Volver</button>
+    </div>
+    <hr class="dotted-divider">
+    <p class="micro">Duración: entre 30 minutos y 4 horas. Las horas se envían con tu zona horaria.</p>
+  </form>
+</section>
+}
