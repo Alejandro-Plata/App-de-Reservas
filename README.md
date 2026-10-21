@@ -14,6 +14,14 @@ Aplicación full-stack para **reservar recursos** (salas, pistas deportivas, equ
 └────────────────┘     JSON       └────────────────┘          └──────────────┘
 ```
 
+## Demo en vivo
+| | URL |
+|---|---|
+| Aplicación web | https://app-reservas-ten.vercel.app |
+| API (Swagger UI) | https://reservas-api-nt3e.onrender.com/swagger-ui.html |
+
+La API corre en el plan gratuito de Render y se duerme tras 15 minutos sin tráfico: la primera petición puede tardar entre 30 y 60 segundos. Puedes registrarte con cualquier e-mail y contraseña para probar como usuario.
+
 ## Qué hace
 - **Usuarios:** se registran, inician sesión, consultan la disponibilidad de un recurso por día, reservan y cancelan sus reservas.
 - **Administradores:** crean, editan y desactivan recursos, y ven y filtran las reservas de todos (por estado, recurso y fechas).

@@ -19,14 +19,14 @@ docker compose up --build
 npm install
 npm start          # http://localhost:4200
 ```
-La URL de la API está en `src/app/services/auth-service.ts` (`API_URL`).
+La URL de la API está en `src/app/services/auth-service.ts` (`API_URL`): `localhost:8080` en local y la API de Render en cualquier otro dominio.
 Como el cliente corre en otro origen (4200), la API necesita **CORS** para `http://localhost:4200`.
 
 ## Despliegue
-El frontend se publica en Vercel con el `vercel.json` incluido (salida `dist/reservas-web/browser`, con reescritura a `index.html` para las rutas). Antes hay que cambiar `API_URL` en `auth-service.ts` por la URL pública de la API y añadir ese dominio a `CORS_ORIGINS` del backend.
+El frontend se publica en Vercel con el `vercel.json` incluido (salida `dist/reservas-web/browser`, con reescritura a `index.html` para las rutas). El dominio de Vercel tiene que estar en `CORS_ORIGINS` del backend. Demo: https://app-reservas-ten.vercel.app
 
-## Contrato asumido con la API
-La guía no fija los JSON, así que este cliente espera lo siguiente (si el backend difiere, se ajusta en `src/app/types` y en los servicios):
+## Contrato con la API
+JSON que consume este cliente (documentación completa en el [Swagger de la API](https://reservas-api-nt3e.onrender.com/swagger-ui.html); los tipos están en `src/app/types`):
 
 | Endpoint | Respuesta |
 |---|---|
