@@ -16,12 +16,12 @@
         <span class="badge">{{ session.role }}</span>
       </div>
       }
-      <a class="btn btn-secondary" routerLink="/recursos">▸ Recursos</a>
-      <a class="btn btn-secondary" routerLink="/mis-reservas">▸ Mis reservas</a>
+      <a class="btn btn-secondary rail-nav" routerLink="/recursos">▸ Recursos</a>
+      <a class="btn btn-secondary rail-nav" routerLink="/mis-reservas">▸ Mis reservas</a>
       @if (authService.isAdmin()) {
-      <a class="btn btn-secondary" routerLink="/admin/reservas">▸ Todas las reservas</a>
+      <a class="btn btn-secondary rail-nav" routerLink="/admin/reservas">▸ Todas las reservas</a>
       }
-      <button class="btn btn-secondary" type="button" (click)="logout()">▸ Salir</button>
+      <button class="btn btn-secondary rail-nav" type="button" (click)="logout()">▸ Salir</button>
 
       <div class="info-box">
         <div class="info-tab">Reglas del juego</div>

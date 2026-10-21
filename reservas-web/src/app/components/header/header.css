@@ -99,3 +99,8 @@
   .links a { padding: var(--sp-md) 0; min-height: 44px; border-top: 1px dotted var(--muted-indigo); }
   .chip { margin: var(--sp-sm) 0 0; min-height: 44px; }
 }
+
+@media (max-width: 720px) {
+  .masthead { padding: var(--sp-md) 0 var(--sp-xs); }
+  .logo-pill { font-size: 24px; padding: var(--sp-xs) var(--sp-md); }
+}

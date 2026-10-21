@@ -44,3 +44,10 @@
 @media (max-width: 720px) {
   .body-grid { grid-template-columns: minmax(0, 1fr); }
 }
+
+@media (max-width: 720px) {
+  .shell { padding: 0 max(var(--sp-md), env(safe-area-inset-right)) 0 max(var(--sp-md), env(safe-area-inset-left)); }
+  .body-grid { padding: var(--sp-md) 0; gap: var(--sp-md); }
+  /* El menú de la cabecera ya ofrece estos accesos */
+  .rail-nav { display: none; }
+}

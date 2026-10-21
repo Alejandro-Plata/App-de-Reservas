@@ -48,7 +48,7 @@
     } @else if (reservas.length === 0 && !errorMessage) {
     <div class="empty">Ninguna reserva coincide con los filtros.</div>
     } @else {
-    <div class="table-wrap">
+    <div class="table-wrap table-cards">
       <table>
         <thead>
           <tr><th>Usuario</th><th>Recurso</th><th>Inicio</th><th>Fin</th><th>Estado</th><th></th></tr>
@@ -56,16 +56,16 @@
         <tbody>
           @for (r of reservas; track r.id) {
           <tr>
-            <td>{{ r.userEmail }}</td>
-            <td>{{ r.resourceName }}</td>
-            <td>{{ formatearFecha(r.startAt) }}</td>
-            <td>{{ formatearFecha(r.endAt) }}</td>
-            <td>
+            <td data-label="Usuario">{{ r.userEmail }}</td>
+            <td data-label="Recurso">{{ r.resourceName }}</td>
+            <td data-label="Inicio">{{ formatearFecha(r.startAt) }}</td>
+            <td data-label="Fin">{{ formatearFecha(r.endAt) }}</td>
+            <td data-label="Estado">
               <span class="badge" [class.badge-off]="r.status === 'CANCELLED'">
                 {{ r.status === 'CONFIRMED' ? 'Confirmada' : 'Cancelada' }}
               </span>
             </td>
-            <td>
+            <td class="cell-action">
               @if (r.status === 'CONFIRMED') {
               <button class="btn btn-danger" type="button" (click)="cancelar(r)">Cancelar</button>
               }

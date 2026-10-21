@@ -280,3 +280,50 @@ a.arrow-chip { position: relative; }
 
 /* Sobre el botón naranja el disco tiene que ser oscuro o no se ve */
 .btn-submit .arrow-disc { background: var(--carbon); }
+
+/* ---------- Móvil ---------- */
+html { -webkit-text-size-adjust: 100%; }
+
+@media (max-width: 720px) {
+  /* 16px evita que iOS haga zoom al enfocar un campo */
+  input, select, textarea { font-size: 16px; }
+
+  .hero-panel { padding: var(--sp-lg) var(--sp-lg) var(--sp-xl); }
+  .hero-panel .tagline { font-size: 16px; }
+  .display { -webkit-text-stroke-width: 5px; text-shadow: 2px 2px 0 var(--carbon); }
+  .chamfer { clip-path: polygon(6px 0, calc(100% - 6px) 0, 100% 6px, 100% calc(100% - 6px),
+    calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px), 0 6px); }
+
+  .module-body { padding: var(--sp-md); }
+  .section-label-bar { padding: var(--sp-sm) var(--sp-md); }
+
+  /* Formularios y acciones a ancho completo */
+  .filters .field { flex: 1 1 100%; }
+  .filters .btn, .actions .btn, .btn-submit { width: 100%; }
+  .actions { flex-direction: column; }
+
+  /* Filas: la información arriba y las acciones debajo */
+  .news-row { flex-wrap: wrap; padding: var(--sp-md); }
+  .news-row .grow { flex-basis: 100%; }
+  .news-row .btn { min-height: 44px; }
+
+  /* Tabla de admin como tarjetas */
+  .table-cards table, .table-cards tbody, .table-cards tr, .table-cards td { display: block; width: 100%; }
+  .table-cards thead { position: absolute; left: -9999px; }
+  .table-cards tr { background: var(--surface); border: 1px solid var(--hairline); margin-bottom: var(--sp-sm); padding: var(--sp-xs) 0; }
+  .table-cards td { border-top: 0; display: flex; justify-content: space-between; gap: var(--sp-md); text-align: right; word-break: break-word; }
+  .table-cards td::before { content: attr(data-label); font-weight: 700; text-transform: uppercase; font-size: 12px; letter-spacing: .5px; color: var(--ink-soft); text-align: left; flex: none; }
+  .table-cards td.cell-action { justify-content: flex-end; }
+  .table-cards td.cell-action:empty { display: none; }
+  .table-cards td.cell-action::before { content: none; }
+  .table-cards .btn { min-height: 44px; }
+
+  /* Paginación apilada */
+  .pager { justify-content: center; text-align: center; }
+  .pager .btn { flex: 1 1 120px; min-height: 44px; }
+  .pager .ui-label { order: -1; flex-basis: 100%; }
+}
+
+@media (max-width: 380px) {
+  .display { font-size: 28px; }
+}
